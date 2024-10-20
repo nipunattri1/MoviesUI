@@ -1,94 +1,772 @@
-<!DOCTYPE html>
-<html class="desktop dark"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Code viewer</title>
-<link rel="stylesheet" href="Code%20viewer_files/codemirror_002.css">
-<link rel="stylesheet" href="Code%20viewer_files/night.css">
-<link rel="stylesheet" href="Code%20viewer_files/matchesonscrollbar.css">
-<link rel="stylesheet" href="Code%20viewer_files/default.css">
-<link rel="stylesheet" href="Code%20viewer_files/common.css">
-<link rel="stylesheet" href="Code%20viewer_files/fa-icons.css">
-<link rel="stylesheet" href="Code%20viewer_files/codemirror.css">
-<link rel="stylesheet" href="Code%20viewer_files/code-viewer.css">
-</head>
-<body class="loading" dir="ltr">
+! function(e, t) {
+   "object" == typeof exports && "undefined" != typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define(t) : (e = "undefined" != typeof globalThis ? globalThis : e || self).DisableDevtool = t()
+}(this, function() {
+   "use strict";
 
-<div id="header">
-    <div id="currentURL">
-        <input type="url" value="https://cdn.jsdelivr.net/npm/disable-devtool" spellcheck="false" autofocus="false">
-        <span id="reloadURL" class="fa-icon"><svg class="fa-icon_refresh" viewBox="0 0 1536 1536"><path d="m 1511,928 q 0,5 -1,7 -64,268 -268,434.5 Q 1038,1536 764,1536 618,1536 481.5,1481 345,1426 238,1324 l -129,129 q -19,19 -45,19 -26,0 -45,-19 Q 0,1434 0,1408 L 0,960 q 0,-26 19,-45 19,-19 45,-19 l 448,0 q 26,0 45,19 19,19 19,45 0,26 -19,45 l -137,137 q 71,66 161,102 90,36 187,36 134,0 250,-65 116,-65 186,-179 11,-17 53,-117 8,-23 30,-23 l 192,0 q 13,0 22.5,9.5 9.5,9.5 9.5,22.5 z m 25,-800 0,448 q 0,26 -19,45 -19,19 -45,19 l -448,0 q -26,0 -45,-19 -19,-19 -19,-45 0,-26 19,-45 L 1117,393 Q 969,256 768,256 q -134,0 -250,65 -116,65 -186,179 -11,17 -53,117 -8,23 -30,23 L 50,640 Q 37,640 27.5,630.5 18,621 18,608 l 0,-7 Q 83,333 288,166.5 493,0 768,0 914,0 1052,55.5 1190,111 1297,212 L 1427,83 q 19,-19 45,-19 26,0 45,19 19,19 19,45 z"></path></svg></span>
-        <span id="removeURL" class="fa-icon"><svg class="fa-icon_trash-o" viewBox="0 0 1408 1536"><path d="m 512,608 v 576 q 0,14 -9,23 -9,9 -23,9 h -64 q -14,0 -23,-9 -9,-9 -9,-23 V 608 q 0,-14 9,-23 9,-9 23,-9 h 64 q 14,0 23,9 9,9 9,23 z m 256,0 v 576 q 0,14 -9,23 -9,9 -23,9 h -64 q -14,0 -23,-9 -9,-9 -9,-23 V 608 q 0,-14 9,-23 9,-9 23,-9 h 64 q 14,0 23,9 9,9 9,23 z m 256,0 v 576 q 0,14 -9,23 -9,9 -23,9 h -64 q -14,0 -23,-9 -9,-9 -9,-23 V 608 q 0,-14 9,-23 9,-9 23,-9 h 64 q 14,0 23,9 9,9 9,23 z m 128,724 V 384 H 256 v 948 q 0,22 7,40.5 7,18.5 14.5,27 7.5,8.5 10.5,8.5 h 832 q 3,0 10.5,-8.5 7.5,-8.5 14.5,-27 7,-18.5 7,-40.5 z M 480,256 H 928 L 880,139 q -7,-9 -17,-11 H 546 q -10,2 -17,11 z m 928,32 v 64 q 0,14 -9,23 -9,9 -23,9 h -96 v 948 q 0,83 -47,143.5 -47,60.5 -113,60.5 H 288 q -66,0 -113,-58.5 Q 128,1419 128,1336 V 384 H 32 Q 18,384 9,375 0,366 0,352 v -64 q 0,-14 9,-23 9,-9 23,-9 H 341 L 411,89 Q 426,52 465,26 504,0 544,0 h 320 q 40,0 79,26 39,26 54,63 l 70,167 h 309 q 14,0 23,9 9,9 9,23 z"></path></svg></span>
-    </div>
-    <div id="pastURLs"><span class="selected">https://cdn.jsdelivr.net/npm/disable-devtool</span></div>
-</div>
-<div id="content" class="codeMirrorContainer codeMirrorBreakAll" data-maximizable="true"><div><div class="cm-search-widget">
-<span class="cm-maximize"><svg viewBox="0 0 40 40"><path d="M4,16V4h12M24,4H36V16M4,24V36H16M36,24V36H24"></path><path d="M14 2.5v12h-12M38 14h-12v-12M14 38v-12h-12M26 38v-12h12"></path></svg></span> 
-<span class="cm-search-widget-input">
-<span class="searchfield">
-<input type="search" spellcheck="false" placeholder="">
-<span class="fa-icon"><svg class="fa-icon_search" viewBox="0 0 1664 1664"><path d="M 1152,704 Q 1152,519 1020.5,387.5 889,256 704,256 519,256 387.5,387.5 256,519 256,704 256,889 387.5,1020.5 519,1152 704,1152 889,1152 1020.5,1020.5 1152,889 1152,704 Z m 512,832 q 0,52 -38,90 -38,38 -90,38 -54,0 -90,-38 L 1103,1284 Q 924,1408 704,1408 561,1408 430.5,1352.5 300,1297 205.5,1202.5 111,1108 55.5,977.5 0,847 0,704 0,561 55.5,430.5 111,300 205.5,205.5 300,111 430.5,55.5 561,0 704,0 q 143,0 273.5,55.5 130.5,55.5 225,150 94.5,94.5 150,225 55.5,130.5 55.5,273.5 0,220 -124,399 l 343,343 q 37,37 37,90 z"></path></svg></span>
-</span> 
-<span class="cm-search-widget-up cm-search-widget-button fa-icon"><svg class="fa-icon_angle-up" viewBox="0 0  998  582"><path d="m 998,499 q 0,13 -10,23 l -50,50 q -10,10 -23,10 -13,0 -23,-10 L 499,179 106,572 Q 96,582 83,582 70,582 60,572 L 10,522 Q 0,512 0,499 0,486 10,476 L 476,10 q 10,-10 23,-10 13,0 23,10 l 466,466 q 10,10 10,23 z"></path></svg></span>&nbsp;
-<span class="cm-search-widget-down cm-search-widget-button fa-icon fa-icon-vflipped"><svg class="fa-icon_angle-up" viewBox="0 0  998  582"><path d="m 998,499 q 0,13 -10,23 l -50,50 q -10,10 -23,10 -13,0 -23,-10 L 499,179 106,572 Q 96,582 83,582 70,582 60,572 L 10,522 Q 0,512 0,499 0,486 10,476 L 476,10 q 10,-10 23,-10 13,0 23,10 l 466,466 q 10,10 10,23 z"></path></svg></span> 
-<span class="cm-search-widget-count" title="0">0</span>
-</span>
-<span class="cm-linter-widget" data-lint="0">
-<span class="cm-linter-widget-count"></span> 
-<span class="cm-linter-widget-up cm-search-widget-button fa-icon"><svg class="fa-icon_angle-up" viewBox="0 0  998  582"><path d="m 998,499 q 0,13 -10,23 l -50,50 q -10,10 -23,10 -13,0 -23,-10 L 499,179 106,572 Q 96,582 83,582 70,582 60,572 L 10,522 Q 0,512 0,499 0,486 10,476 L 476,10 q 10,-10 23,-10 13,0 23,10 l 466,466 q 10,10 10,23 z"></path></svg></span>&nbsp;
-<span class="cm-linter-widget-down cm-search-widget-button fa-icon fa-icon-vflipped"><svg class="fa-icon_angle-up" viewBox="0 0  998  582"><path d="m 998,499 q 0,13 -10,23 l -50,50 q -10,10 -23,10 -13,0 -23,-10 L 499,179 106,572 Q 96,582 83,582 70,582 60,572 L 10,522 Q 0,512 0,499 0,486 10,476 L 476,10 q 10,-10 23,-10 13,0 23,10 l 466,466 q 10,10 10,23 z"></path></svg></span> 
-</span>
-<span>
-<a class="fa-icon sourceURL" href="https://cdn.jsdelivr.net/npm/disable-devtool" target="_blank" title="https://cdn.jsdelivr.net/npm/disable-devtool"><svg class="fa-icon_external-link" viewBox="0 0 1792 1536"><path d="m 1408,928 0,320 q 0,119 -84.5,203.5 Q 1239,1536 1120,1536 l -832,0 Q 169,1536 84.5,1451.5 0,1367 0,1248 L 0,416 Q 0,297 84.5,212.5 169,128 288,128 l 704,0 q 14,0 23,9 9,9 9,23 l 0,64 q 0,14 -9,23 -9,9 -23,9 l -704,0 q -66,0 -113,47 -47,47 -47,113 l 0,832 q 0,66 47,113 47,47 113,47 l 832,0 q 66,0 113,-47 47,-47 47,-113 l 0,-320 q 0,-14 9,-23 9,-9 23,-9 l 64,0 q 14,0 23,9 9,9 9,23 z m 384,-864 0,512 q 0,26 -19,45 -19,19 -45,19 -26,0 -45,-19 L 1507,445 855,1097 q -10,10 -23,10 -13,0 -23,-10 L 695,983 q -10,-10 -10,-23 0,-13 10,-23 L 1347,285 1171,109 q -19,-19 -19,-45 0,-26 19,-45 19,-19 45,-19 l 512,0 q 26,0 45,19 19,19 19,45 z"></path></svg></a>
-</span>
-</div><div class="CodeMirror CodeMirror-wrap cm-s-night CodeMirror-focused" style="height: 704px;"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 442.2px; left: 194px;"><textarea style="position: absolute; bottom: -1em; padding: 0px; width: 1px; height: 1em; outline: none;" wrap="off" autocorrect="off" autocapitalize="none" spellcheck="false" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true" style="display: block; bottom: 0px;"><div style="min-width: 1px; height: 11920px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1" draggable="true"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -17px; border-right-width: 33px; min-height: 11920px; padding-right: 17px; padding-bottom: 0px;"><div style="position: relative; top: 1770px;"><div class="CodeMirror-lines" role="presentation"><div style="position: relative; outline: none;" role="presentation"><div class="CodeMirror-measure"><pre class="CodeMirror-line-like"><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"><pre class="CodeMirror-line" role="presentation"><span role="presentation"> &nbsp; <span class="cm-keyword">function</span> <span class="cm-def">r</span>(<span class="cm-def">e</span>, <span class="cm-def">t</span>) <span class=" CodeMirror-matchingbracket">{</span></span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors" style=""><div class="CodeMirror-cursor" style="left: 164px; top: 765px; height: 15px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation" style=""><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">119</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; };</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">120</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-keyword">throw</span> <span class="cm-keyword">new</span> <span class="cm-variable">TypeError</span>(<span class="cm-string">"Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">121</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">122</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">var</span> <span class="cm-def">o</span>, <span class="cm-def">r</span> <span class="cm-operator">=</span> <span class="cm-operator">!</span><span class="cm-number">0</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">123</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-def">u</span> <span class="cm-operator">=</span> <span class="cm-operator">!</span><span class="cm-number">1</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">124</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span> {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">125</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">s</span>: <span class="cm-keyword">function</span>() {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">126</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-2">i</span> <span class="cm-operator">=</span> <span class="cm-variable-2">i</span>.<span class="cm-property">call</span>(<span class="cm-variable-2">e</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">127</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; },</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">128</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">n</span>: <span class="cm-keyword">function</span>() {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">129</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">var</span> <span class="cm-def">e</span> <span class="cm-operator">=</span> <span class="cm-variable-2">i</span>.<span class="cm-property">next</span>();</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">130</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable-2">r</span> <span class="cm-operator">=</span> <span class="cm-variable-2">e</span>.<span class="cm-property">done</span>, <span class="cm-variable-2">e</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">131</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; },</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">132</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">e</span>: <span class="cm-keyword">function</span>(<span class="cm-def">e</span>) {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">133</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-2">u</span> <span class="cm-operator">=</span> <span class="cm-operator">!</span><span class="cm-number">0</span>, <span class="cm-variable-2">o</span> <span class="cm-operator">=</span> <span class="cm-variable-2">e</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">134</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; },</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">135</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">f</span>: <span class="cm-keyword">function</span>() {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">136</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">try</span> {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">137</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-variable-2">r</span> <span class="cm-operator">||</span> <span class="cm-atom">null</span> <span class="cm-operator">==</span> <span class="cm-variable-2">i</span>.<span class="cm-property">return</span> <span class="cm-operator">||</span> <span class="cm-variable-2">i</span>.<span class="cm-property">return</span>()</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">138</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  } <span class="cm-keyword">finally</span> {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">139</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-keyword">if</span> (<span class="cm-variable-2">u</span>) <span class="cm-keyword">throw</span> <span class="cm-variable-2">o</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">140</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">141</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">142</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">143</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">144</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">145</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; <span class="cm-keyword">function</span> <span class="cm-def">t</span>() {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">146</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">d</span>.<span class="cm-property">url</span>) <span class="cm-variable">window</span>.<span class="cm-property">location</span>.<span class="cm-property">href</span> <span class="cm-operator">=</span> <span class="cm-variable">d</span>.<span class="cm-property">url</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">147</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (<span class="cm-variable">d</span>.<span class="cm-property">rewriteHTML</span>) <span class="cm-keyword">try</span> {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">148</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-variable">document</span>.<span class="cm-property">documentElement</span>.<span class="cm-property">innerHTML</span> <span class="cm-operator">=</span> <span class="cm-variable">d</span>.<span class="cm-property">rewriteHTML</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">149</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp;  } <span class="cm-keyword">catch</span> (<span class="cm-def">e</span>) {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">150</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-variable">document</span>.<span class="cm-property">documentElement</span>.<span class="cm-property">innerText</span> <span class="cm-operator">=</span> <span class="cm-variable">d</span>.<span class="cm-property">rewriteHTML</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">151</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp;  } <span class="cm-keyword">else</span> {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">152</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-keyword">try</span> {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">153</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">window</span>.<span class="cm-property">opener</span> <span class="cm-operator">=</span> <span class="cm-atom">null</span>, <span class="cm-variable">window</span>.<span class="cm-property">open</span>(<span class="cm-string">""</span>, <span class="cm-string">"_self"</span>), <span class="cm-variable">window</span>.<span class="cm-property">close</span>(), <span class="cm-variable">window</span>.<span class="cm-property">history</span>.<span class="cm-property">back</span>()</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">154</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; } <span class="cm-keyword">catch</span> (<span class="cm-def">e</span>) {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">155</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable-2">e</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">156</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">157</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-variable">setTimeout</span>(<span class="cm-keyword">function</span>() {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">158</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">window</span>.<span class="cm-property">location</span>.<span class="cm-property">href</span> <span class="cm-operator">=</span> <span class="cm-variable">d</span>.<span class="cm-property">timeOutUrl</span> <span class="cm-operator">||</span> <span class="cm-string">"https://theajack.github.io/disable-devtool/404.html?h="</span>.<span class="cm-property">concat</span>(<span class="cm-variable">encodeURIComponent</span>(<span class="cm-variable">location</span>.<span class="cm-property">host</span>))</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">159</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; }, <span class="cm-number">500</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">160</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">161</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">162</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; <span class="cm-keyword">var</span> <span class="cm-def">d</span> <span class="cm-operator">=</span> {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">163</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">md5</span>: <span class="cm-string">""</span>,</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">164</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">ondevtoolopen</span>: <span class="cm-atom">null</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">165</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">ondevtoolclose</span>: <span class="cm-atom">null</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">166</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">url</span>: <span class="cm-string">""</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">167</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">timeOutUrl</span>: <span class="cm-string">""</span>,</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">168</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">tkName</span>: <span class="cm-string">"ddtk"</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">169</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">interval</span>: <span class="cm-number">500</span>,</span></pre></div><div style="position: relative;" class="CodeMirror-activeline"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: -30px; width: 30px;"></div><div class="CodeMirror-gutter-wrapper CodeMirror-activeline-gutter" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">170</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">disableMenu</span>: <span class="cm-operator">!</span><span class="cm-number">0</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">171</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">stopIntervalTime</span>: <span class="cm-number">5e3</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">172</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">clearIntervalWhenDevOpenTrigger</span>: <span class="cm-operator">!</span><span class="cm-number">1</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">173</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">detectors</span>: [<span class="cm-number">0</span>, <span class="cm-number">1</span>, <span class="cm-number">3</span>, <span class="cm-number">4</span>, <span class="cm-number">5</span>, <span class="cm-number">6</span>, <span class="cm-number">7</span>],</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">174</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">clearLog</span>: <span class="cm-operator">!</span><span class="cm-number">0</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">175</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">disableSelect</span>: <span class="cm-operator">!</span><span class="cm-number">1</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">176</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">disableCopy</span>: <span class="cm-operator">!</span><span class="cm-number">1</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">177</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">disableCut</span>: <span class="cm-operator">!</span><span class="cm-number">1</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">178</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">disablePaste</span>: <span class="cm-operator">!</span><span class="cm-number">1</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">179</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">ignore</span>: <span class="cm-atom">null</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">180</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">disableIframeParents</span>: <span class="cm-operator">!</span><span class="cm-number">0</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">181</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">seo</span>: <span class="cm-operator">!</span><span class="cm-number">0</span>,</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">182</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-property">rewriteHTML</span>: <span class="cm-string">""</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">183</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp;  },</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">184</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-def">U</span> <span class="cm-operator">=</span> [<span class="cm-string">"detectors"</span>, <span class="cm-string">"ondevtoolclose"</span>, <span class="cm-string">"ignore"</span>];</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">185</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">186</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; <span class="cm-keyword">function</span> <span class="cm-def">q</span>(<span class="cm-def">e</span>) {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">187</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">var</span> <span class="cm-def">t</span>, <span class="cm-def">n</span> <span class="cm-operator">=</span> <span class="cm-number">0</span> <span class="cm-operator">&lt;</span> <span class="cm-variable-2">arguments</span>.<span class="cm-property">length</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-keyword">void</span> <span class="cm-number">0</span> <span class="cm-operator">!==</span> <span class="cm-variable-2">e</span> <span class="cm-operator">?</span> <span class="cm-variable-2">e</span> : {};</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">188</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">for</span> (<span class="cm-variable-2">t</span> <span class="cm-keyword">in</span> <span class="cm-variable-2">d</span>) {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">189</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-keyword">var</span> <span class="cm-def">i</span> <span class="cm-operator">=</span> <span class="cm-variable-2">t</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">190</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-keyword">void</span> <span class="cm-number">0</span> <span class="cm-operator">===</span> <span class="cm-variable-2">n</span>[<span class="cm-variable-2">i</span>] <span class="cm-operator">||</span> <span class="cm-variable-2">o</span>(<span class="cm-variable-2">d</span>[<span class="cm-variable-2">i</span>]) <span class="cm-operator">!==</span> <span class="cm-variable-2">o</span>(<span class="cm-variable-2">n</span>[<span class="cm-variable-2">i</span>]) <span class="cm-operator">&amp;&amp;</span> <span class="cm-operator">-</span><span class="cm-number">1</span> <span class="cm-operator">===</span> <span class="cm-variable-2">U</span>.<span class="cm-property">indexOf</span>(<span class="cm-variable-2">i</span>) <span class="cm-operator">||</span> (<span class="cm-variable-2">d</span>[<span class="cm-variable-2">i</span>] <span class="cm-operator">=</span> <span class="cm-variable-2">n</span>[<span class="cm-variable-2">i</span>])</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">191</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">192</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-string">"function"</span> <span class="cm-operator">==</span> <span class="cm-keyword">typeof</span> <span class="cm-variable-2">d</span>.<span class="cm-property">ondevtoolclose</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-operator">!</span><span class="cm-number">0</span> <span class="cm-operator">===</span> <span class="cm-variable-2">d</span>.<span class="cm-property">clearIntervalWhenDevOpenTrigger</span> <span class="cm-operator">&amp;&amp;</span> (<span class="cm-variable-2">d</span>.<span class="cm-property">clearIntervalWhenDevOpenTrigger</span> <span class="cm-operator">=</span> <span class="cm-operator">!</span><span class="cm-number">1</span>, <span class="cm-variable">console</span>.<span class="cm-property">warn</span>(<span class="cm-string">"【DISABLE-DEVTOOL】clearIntervalWhenDevOpenTrigger 在使用 ondevtoolclose 时无效"</span>))</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">193</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">194</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">195</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; <span class="cm-keyword">function</span> <span class="cm-def">v</span>() {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">196</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span> (<span class="cm-keyword">new</span> <span class="cm-variable">Date</span>).<span class="cm-property">getTime</span>()</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">197</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">198</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">199</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; <span class="cm-keyword">function</span> <span class="cm-def">h</span>(<span class="cm-def">e</span>) {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">200</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">var</span> <span class="cm-def">t</span> <span class="cm-operator">=</span> <span class="cm-variable-2">v</span>();</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 33px; width: 1px; border-bottom: 0px solid transparent; top: 11920px;"></div><div class="CodeMirror-gutters" style="height: 11953px; left: 0px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></div></div>
+   function o(e) {
+      return (o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(e) {
+         return typeof e
+      } : function(e) {
+         return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e
+      })(e)
+   }
 
-<script src="Code%20viewer_files/codemirror.js"></script>
-<script src="Code%20viewer_files/panel.js"></script>
-<script src="Code%20viewer_files/matchbrackets.js"></script>
-<script src="Code%20viewer_files/annotatescrollbar.js"></script>
-<script src="Code%20viewer_files/searchcursor.js"></script>
-<script src="Code%20viewer_files/active-line.js"></script>
-<script src="Code%20viewer_files/javascript.js"></script>
-<script src="Code%20viewer_files/css.js"></script>
-<script src="Code%20viewer_files/xml.js"></script>
-<script src="Code%20viewer_files/htmlmixed.js"></script>
+   function i(e, t) {
+      if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function")
+   }
 
-<script src="Code%20viewer_files/vapi.js"></script>
-<script src="Code%20viewer_files/vapi-common.js"></script>
-<script src="Code%20viewer_files/vapi-client.js"></script>
+   function r(e, t) {
+      for (var n = 0; n < t.length; n++) {
+         var i = t[n];
+         i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), Object.defineProperty(e, i.key, i)
+      }
+   }
 
-<script src="Code%20viewer_files/search.js" type="module"></script>
-<script src="Code%20viewer_files/search-thread.js"></script>
+   function u(e, t, n) {
+      t && r(e.prototype, t), n && r(e, n), Object.defineProperty(e, "prototype", {
+         writable: !1
+      })
+   }
 
-<script src="Code%20viewer_files/beautifier.min.js"></script>
-<script src="Code%20viewer_files/fa-icons.js" type="module"></script>
-<script src="Code%20viewer_files/theme.js" type="module"></script>
-<script src="Code%20viewer_files/i18n.js" type="module"></script>
-<script src="Code%20viewer_files/dashboard-common.js" type="module"></script>
-<script src="Code%20viewer_files/code-viewer.js" type="module"></script>
+   function e(e, t, n) {
+      t in e ? Object.defineProperty(e, t, {
+         value: n,
+         enumerable: !0,
+         configurable: !0,
+         writable: !0
+      }) : e[t] = n
+   }
 
+   function n(e, t) {
+      if ("function" != typeof t && null !== t) throw new TypeError("Super expression must either be null or a function");
+      e.prototype = Object.create(t && t.prototype, {
+         constructor: {
+            value: e,
+            writable: !0,
+            configurable: !0
+         }
+      }), Object.defineProperty(e, "prototype", {
+         writable: !1
+      }), t && a(e, t)
+   }
 
-<div class="cm-search-widget-template" style="display:none;">
-<div class="cm-search-widget">
-<span class="cm-maximize"><svg viewBox="0 0 40 40"><path d="M4,16V4h12M24,4H36V16M4,24V36H16M36,24V36H24"></path><path d="M14 2.5v12h-12M38 14h-12v-12M14 38v-12h-12M26 38v-12h12"></path></svg></span> 
-<span class="cm-search-widget-input">
-<span class="searchfield">
-<input type="search" spellcheck="false" placeholder="">
-<span class="fa-icon"><svg class="fa-icon_search" viewBox="0 0 1664 1664"><path d="M 1152,704 Q 1152,519 1020.5,387.5 889,256 704,256 519,256 387.5,387.5 256,519 256,704 256,889 387.5,1020.5 519,1152 704,1152 889,1152 1020.5,1020.5 1152,889 1152,704 Z m 512,832 q 0,52 -38,90 -38,38 -90,38 -54,0 -90,-38 L 1103,1284 Q 924,1408 704,1408 561,1408 430.5,1352.5 300,1297 205.5,1202.5 111,1108 55.5,977.5 0,847 0,704 0,561 55.5,430.5 111,300 205.5,205.5 300,111 430.5,55.5 561,0 704,0 q 143,0 273.5,55.5 130.5,55.5 225,150 94.5,94.5 150,225 55.5,130.5 55.5,273.5 0,220 -124,399 l 343,343 q 37,37 37,90 z"></path></svg></span>
-</span> 
-<span class="cm-search-widget-up cm-search-widget-button fa-icon"><svg class="fa-icon_angle-up" viewBox="0 0  998  582"><path d="m 998,499 q 0,13 -10,23 l -50,50 q -10,10 -23,10 -13,0 -23,-10 L 499,179 106,572 Q 96,582 83,582 70,582 60,572 L 10,522 Q 0,512 0,499 0,486 10,476 L 476,10 q 10,-10 23,-10 13,0 23,10 l 466,466 q 10,10 10,23 z"></path></svg></span>&nbsp;
-<span class="cm-search-widget-down cm-search-widget-button fa-icon fa-icon-vflipped"><svg class="fa-icon_angle-up" viewBox="0 0  998  582"><path d="m 998,499 q 0,13 -10,23 l -50,50 q -10,10 -23,10 -13,0 -23,-10 L 499,179 106,572 Q 96,582 83,582 70,582 60,572 L 10,522 Q 0,512 0,499 0,486 10,476 L 476,10 q 10,-10 23,-10 13,0 23,10 l 466,466 q 10,10 10,23 z"></path></svg></span> 
-<span class="cm-search-widget-count"></span>
-</span>
-<span class="cm-linter-widget" data-lint="0">
-<span class="cm-linter-widget-count"></span> 
-<span class="cm-linter-widget-up cm-search-widget-button fa-icon"><svg class="fa-icon_angle-up" viewBox="0 0  998  582"><path d="m 998,499 q 0,13 -10,23 l -50,50 q -10,10 -23,10 -13,0 -23,-10 L 499,179 106,572 Q 96,582 83,582 70,582 60,572 L 10,522 Q 0,512 0,499 0,486 10,476 L 476,10 q 10,-10 23,-10 13,0 23,10 l 466,466 q 10,10 10,23 z"></path></svg></span>&nbsp;
-<span class="cm-linter-widget-down cm-search-widget-button fa-icon fa-icon-vflipped"><svg class="fa-icon_angle-up" viewBox="0 0  998  582"><path d="m 998,499 q 0,13 -10,23 l -50,50 q -10,10 -23,10 -13,0 -23,-10 L 499,179 106,572 Q 96,582 83,582 70,582 60,572 L 10,522 Q 0,512 0,499 0,486 10,476 L 476,10 q 10,-10 23,-10 13,0 23,10 l 466,466 q 10,10 10,23 z"></path></svg></span> 
-</span>
-<span>
-<a class="fa-icon sourceURL" href="" target="_blank"><svg class="fa-icon_external-link" viewBox="0 0 1792 1536"><path d="m 1408,928 0,320 q 0,119 -84.5,203.5 Q 1239,1536 1120,1536 l -832,0 Q 169,1536 84.5,1451.5 0,1367 0,1248 L 0,416 Q 0,297 84.5,212.5 169,128 288,128 l 704,0 q 14,0 23,9 9,9 9,23 l 0,64 q 0,14 -9,23 -9,9 -23,9 l -704,0 q -66,0 -113,47 -47,47 -47,113 l 0,832 q 0,66 47,113 47,47 113,47 l 832,0 q 66,0 113,-47 47,-47 47,-113 l 0,-320 q 0,-14 9,-23 9,-9 23,-9 l 64,0 q 14,0 23,9 9,9 9,23 z m 384,-864 0,512 q 0,26 -19,45 -19,19 -45,19 -26,0 -45,-19 L 1507,445 855,1097 q -10,10 -23,10 -13,0 -23,-10 L 695,983 q -10,-10 -10,-23 0,-13 10,-23 L 1347,285 1171,109 q -19,-19 -19,-45 0,-26 19,-45 19,-19 45,-19 l 512,0 q 26,0 45,19 19,19 19,45 z"></path></svg></a>
-</span>
-</div>
-</div></body></html>
+   function c(e) {
+      return (c = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(e) {
+         return e.__proto__ || Object.getPrototypeOf(e)
+      })(e)
+   }
+
+   function a(e, t) {
+      return (a = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(e, t) {
+         return e.__proto__ = t, e
+      })(e, t)
+   }
+
+   function H(e, t) {
+      if (t && ("object" == typeof t || "function" == typeof t)) return t;
+      if (void 0 !== t) throw new TypeError("Derived constructors may only return object or undefined");
+      t = e;
+      if (void 0 === t) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      return t
+   }
+
+   function l(n) {
+      var i = function() {
+         if ("undefined" == typeof Reflect || !Reflect.construct) return !1;
+         if (Reflect.construct.sham) return !1;
+         if ("function" == typeof Proxy) return !0;
+         try {
+            return Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {})), !0
+         } catch (e) {
+            return !1
+         }
+      }();
+      return function() {
+         var e, t = c(n);
+         return H(this, i ? (e = c(this).constructor, Reflect.construct(t, arguments, e)) : t.apply(this, arguments))
+      }
+   }
+
+   function f(e, t) {
+      (null == t || t > e.length) && (t = e.length);
+      for (var n = 0, i = new Array(t); n < t; n++) i[n] = e[n];
+      return i
+   }
+
+   function s(e, t) {
+      var n, i = "undefined" != typeof Symbol && e[Symbol.iterator] || e["@@iterator"];
+      if (!i) {
+         if (Array.isArray(e) || (i = function(e, t) {
+               if (e) {
+                  if ("string" == typeof e) return f(e, t);
+                  var n = Object.prototype.toString.call(e).slice(8, -1);
+                  return "Map" === (n = "Object" === n && e.constructor ? e.constructor.name : n) || "Set" === n ? Array.from(e) : "Arguments" === n || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n) ? f(e, t) : void 0
+               }
+            }(e)) || t && e && "number" == typeof e.length) return i && (e = i), n = 0, {
+            s: t = function() {},
+            n: function() {
+               return n >= e.length ? {
+                  done: !0
+               } : {
+                  done: !1,
+                  value: e[n++]
+               }
+            },
+            e: function(e) {
+               throw e
+            },
+            f: t
+         };
+         throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")
+      }
+      var o, r = !0,
+         u = !1;
+      return {
+         s: function() {
+            i = i.call(e)
+         },
+         n: function() {
+            var e = i.next();
+            return r = e.done, e
+         },
+         e: function(e) {
+            u = !0, o = e
+         },
+         f: function() {
+            try {
+               r || null == i.return || i.return()
+            } finally {
+               if (u) throw o
+            }
+         }
+      }
+   }
+
+   function t() {
+      if (d.url) window.location.href = d.url;
+      else if (d.rewriteHTML) try {
+         document.documentElement.innerHTML = d.rewriteHTML
+      } catch (e) {
+         document.documentElement.innerText = d.rewriteHTML
+      } else {
+         try {
+            window.opener = null, window.open("", "_self"), window.close(), window.history.back()
+         } catch (e) {
+            console.log(e)
+         }
+         setTimeout(function() {
+            window.location.href = d.timeOutUrl || "https://theajack.github.io/disable-devtool/404.html?h=".concat(encodeURIComponent(location.host))
+         }, 500)
+      }
+   }
+   var d = {
+         md5: "",
+         ondevtoolopen: null,
+         ondevtoolclose: null,
+         url: "",
+         timeOutUrl: "",
+         tkName: "ddtk",
+         interval: 500,
+         disableMenu: !0,
+         stopIntervalTime: 5e3,
+         clearIntervalWhenDevOpenTrigger: !1,
+         detectors: [0, 1, 3, 4, 5, 6, 7],
+         clearLog: !0,
+         disableSelect: !1,
+         disableCopy: !1,
+         disableCut: !1,
+         disablePaste: !1,
+         ignore: null,
+         disableIframeParents: !0,
+         seo: !0,
+         rewriteHTML: ""
+      },
+      U = ["detectors", "ondevtoolclose", "ignore"];
+
+   function q(e) {
+      var t, n = 0 < arguments.length && void 0 !== e ? e : {};
+      for (t in d) {
+         var i = t;
+         void 0 === n[i] || o(d[i]) !== o(n[i]) && -1 === U.indexOf(i) || (d[i] = n[i])
+      }
+      "function" == typeof d.ondevtoolclose && !0 === d.clearIntervalWhenDevOpenTrigger && (d.clearIntervalWhenDevOpenTrigger = !1, console.warn("【DISABLE-DEVTOOL】clearIntervalWhenDevOpenTrigger 在使用 ondevtoolclose 时无效"))
+   }
+
+   function v() {
+      return (new Date).getTime()
+   }
+
+   function h(e) {
+      var t = v();
+      return e(), v() - t
+   }
+
+   function z(n, i) {
+      function e(t) {
+         return function() {
+            n && n();
+            var e = t.apply(void 0, arguments);
+            return i && i(), e
+         }
+      }
+      var t = window.alert,
+         o = window.confirm,
+         r = window.prompt;
+      try {
+         window.alert = e(t), window.confirm = e(o), window.prompt = e(r)
+      } catch (e) {}
+   }
+   var p, y, B, b = {
+      iframe: !1,
+      pc: !1,
+      qqBrowser: !1,
+      firefox: !1,
+      macos: !1,
+      edge: !1,
+      oldEdge: !1,
+      ie: !1,
+      iosChrome: !1,
+      iosEdge: !1,
+      chrome: !1,
+      seoBot: !1,
+      mobile: !1
+   };
+
+   function W() {
+      function e(e) {
+         return -1 !== t.indexOf(e)
+      }
+      var t = navigator.userAgent.toLowerCase(),
+         n = function() {
+            var e = navigator,
+               t = e.platform,
+               e = e.maxTouchPoints;
+            if ("number" == typeof e) return 1 < e;
+            if ("string" == typeof t) {
+               e = t.toLowerCase();
+               if (/(mac|win)/i.test(e)) return !1;
+               if (/(android|iphone|ipad|ipod|arch)/i.test(e)) return !0
+            }
+            return /(iphone|ipad|ipod|ios|android)/i.test(navigator.userAgent.toLowerCase())
+         }(),
+         i = !!window.top && window !== window.top,
+         o = !n,
+         r = e("qqbrowser"),
+         u = e("firefox"),
+         c = e("macintosh"),
+         a = e("edge"),
+         l = a && !e("chrome"),
+         f = l || e("trident") || e("msie"),
+         s = e("crios"),
+         d = e("edgios"),
+         v = e("chrome") || s,
+         h = !n && /(googlebot|baiduspider|bingbot|applebot|petalbot|yandexbot|bytespider|chrome\-lighthouse|moto g power)/i.test(t);
+      Object.assign(b, {
+         iframe: i,
+         pc: o,
+         qqBrowser: r,
+         firefox: u,
+         macos: c,
+         edge: a,
+         oldEdge: l,
+         ie: f,
+         iosChrome: s,
+         iosEdge: d,
+         chrome: v,
+         seoBot: h,
+         mobile: n
+      })
+   }
+
+   function M() {
+      for (var e = function() {
+            for (var e = {}, t = 0; t < 500; t++) e["".concat(t)] = "".concat(t);
+            return e
+         }(), t = [], n = 0; n < 50; n++) t.push(e);
+      return t
+   }
+
+   function w() {
+      d.clearLog && B()
+   }
+   var K = "",
+      V = !1;
+
+   function F() {
+      var e = d.ignore;
+      if (e) {
+         if ("function" == typeof e) return e();
+         if (0 !== e.length) {
+            var t = location.href;
+            if (K === t) return V;
+            K = t;
+            var n, i = !1,
+               o = s(e);
+            try {
+               for (o.s(); !(n = o.n()).done;) {
+                  var r = n.value;
+                  if ("string" == typeof r) {
+                     if (-1 !== t.indexOf(r)) {
+                        i = !0;
+                        break
+                     }
+                  } else if (r.test(t)) {
+                     i = !0;
+                     break
+                  }
+               }
+            } catch (e) {
+               o.e(e)
+            } finally {
+               o.f()
+            }
+            return V = i
+         }
+      }
+   }
+   var X = function() {
+      return !1
+   };
+
+   function g(n) {
+      var t, e, i = 74,
+         o = 73,
+         r = 85,
+         u = 83,
+         c = 123,
+         a = b.macos ? function(e, t) {
+            return e.metaKey && e.altKey && (t === o || t === i)
+         } : function(e, t) {
+            return e.ctrlKey && e.shiftKey && (t === o || t === i)
+         },
+         l = b.macos ? function(e, t) {
+            return e.metaKey && e.altKey && t === r || e.metaKey && t === u
+         } : function(e, t) {
+            return e.ctrlKey && (t === u || t === r)
+         };
+      n.addEventListener("keydown", function(e) {
+         var t = (e = e || n.event).keyCode || e.which;
+         if (t === c || a(e, t) || l(e, t)) return T(n, e)
+      }, !0), t = n, d.disableMenu && t.addEventListener("contextmenu", function(e) {
+         if ("touch" !== e.pointerType) return T(t, e)
+      }), e = n, d.disableSelect && m(e, "selectstart"), e = n, d.disableCopy && m(e, "copy"), e = n, d.disableCut && m(e, "cut"), e = n, d.disablePaste && m(e, "paste")
+   }
+
+   function m(t, e) {
+      t.addEventListener(e, function(e) {
+         return T(t, e)
+      })
+   }
+
+   function T(e, t) {
+      if (!F() && !X()) return (t = t || e.event).returnValue = !1, t.preventDefault(), !1
+   }
+   var O, D = !1,
+      S = {};
+
+   function N(e) {
+      S[e] = !1
+   }
+
+   function $() {
+      for (var e in S)
+         if (S[e]) return D = !0;
+      return D = !1
+   }(_ = O = O || {})[_.Unknown = -1] = "Unknown", _[_.RegToString = 0] = "RegToString", _[_.DefineId = 1] = "DefineId", _[_.Size = 2] = "Size", _[_.DateToString = 3] = "DateToString", _[_.FuncToString = 4] = "FuncToString", _[_.Debugger = 5] = "Debugger", _[_.Performance = 6] = "Performance", _[_.DebugLib = 7] = "DebugLib";
+   var k = function() {
+         function n(e) {
+            var t = e.type,
+               e = e.enabled,
+               e = void 0 === e || e;
+            i(this, n), this.type = O.Unknown, this.enabled = !0, this.type = t, this.enabled = e, this.enabled && (t = this, Q.push(t), this.init())
+         }
+         return u(n, [{
+            key: "onDevToolOpen",
+            value: function() {
+               var e;
+               console.warn("You don't have permission to use DEVTOOL!【type = ".concat(this.type, "】")), d.clearIntervalWhenDevOpenTrigger && te(), window.clearTimeout(J), d.ondevtoolopen(this.type, t), e = this.type, S[e] = !0
+            }
+         }, {
+            key: "init",
+            value: function() {}
+         }]), n
+      }(),
+      G = function() {
+         n(t, k);
+         var e = l(t);
+
+         function t() {
+            return i(this, t), e.call(this, {
+               type: O.DebugLib
+            })
+         }
+         return u(t, [{
+            key: "init",
+            value: function() {}
+         }, {
+            key: "detect",
+            value: function() {
+               var e;
+               (!0 === (null == (e = null == (e = window.eruda) ? void 0 : e._devTools) ? void 0 : e._isShow) || window._vcOrigConsole && window.document.querySelector("#__vconsole.vc-toggle")) && this.onDevToolOpen()
+            }
+         }], [{
+            key: "isUsing",
+            value: function() {
+               return !!window.eruda || !!window._vcOrigConsole
+            }
+         }]), t
+      }(),
+      Y = 0,
+      J = 0,
+      Q = [],
+      Z = 0;
+
+   function ee(o) {
+      function e() {
+         l = !0
+      }
+
+      function t() {
+         l = !1
+      }
+      var n, i, r, u, c, a, l = !1;
+
+      function f() {
+         (a[u] === r ? i : n)()
+      }
+      z(e, t), n = t, i = e, void 0 !== (a = document).hidden ? (r = "hidden", c = "visibilitychange", u = "visibilityState") : void 0 !== a.mozHidden ? (r = "mozHidden", c = "mozvisibilitychange", u = "mozVisibilityState") : void 0 !== a.msHidden ? (r = "msHidden", c = "msvisibilitychange", u = "msVisibilityState") : void 0 !== a.webkitHidden && (r = "webkitHidden", c = "webkitvisibilitychange", u = "webkitVisibilityState"), a.removeEventListener(c, f, !1), a.addEventListener(c, f, !1), Y = window.setInterval(function() {
+         if (!(o.isSuspend || l || F())) {
+            var e, t, n = s(Q);
+            try {
+               for (n.s(); !(e = n.n()).done;) {
+                  var i = e.value;
+                  N(i.type), i.detect(Z++)
+               }
+            } catch (e) {
+               n.e(e)
+            } finally {
+               n.f()
+            }
+            w(), "function" == typeof d.ondevtoolclose && (t = D, !$() && t && d.ondevtoolclose())
+         }
+      }, d.interval), J = setTimeout(function() {
+         b.pc || G.isUsing() || te()
+      }, d.stopIntervalTime)
+   }
+
+   function te() {
+      window.clearInterval(Y)
+   }
+   var P = 8;
+
+   function ne(e) {
+      for (var t = function(e, t) {
+            e[t >> 5] |= 128 << t % 32, e[14 + (t + 64 >>> 9 << 4)] = t;
+            for (var n = 1732584193, i = -271733879, o = -1732584194, r = 271733878, u = 0; u < e.length; u += 16) {
+               var c = n,
+                  a = i,
+                  l = o,
+                  f = r;
+               n = E(n, i, o, r, e[u + 0], 7, -680876936), r = E(r, n, i, o, e[u + 1], 12, -389564586), o = E(o, r, n, i, e[u + 2], 17, 606105819), i = E(i, o, r, n, e[u + 3], 22, -1044525330), n = E(n, i, o, r, e[u + 4], 7, -176418897), r = E(r, n, i, o, e[u + 5], 12, 1200080426), o = E(o, r, n, i, e[u + 6], 17, -1473231341), i = E(i, o, r, n, e[u + 7], 22, -45705983), n = E(n, i, o, r, e[u + 8], 7, 1770035416), r = E(r, n, i, o, e[u + 9], 12, -1958414417), o = E(o, r, n, i, e[u + 10], 17, -42063), i = E(i, o, r, n, e[u + 11], 22, -1990404162), n = E(n, i, o, r, e[u + 12], 7, 1804603682), r = E(r, n, i, o, e[u + 13], 12, -40341101), o = E(o, r, n, i, e[u + 14], 17, -1502002290), i = E(i, o, r, n, e[u + 15], 22, 1236535329), n = j(n, i, o, r, e[u + 1], 5, -165796510), r = j(r, n, i, o, e[u + 6], 9, -1069501632), o = j(o, r, n, i, e[u + 11], 14, 643717713), i = j(i, o, r, n, e[u + 0], 20, -373897302), n = j(n, i, o, r, e[u + 5], 5, -701558691), r = j(r, n, i, o, e[u + 10], 9, 38016083), o = j(o, r, n, i, e[u + 15], 14, -660478335), i = j(i, o, r, n, e[u + 4], 20, -405537848), n = j(n, i, o, r, e[u + 9], 5, 568446438), r = j(r, n, i, o, e[u + 14], 9, -1019803690), o = j(o, r, n, i, e[u + 3], 14, -187363961), i = j(i, o, r, n, e[u + 8], 20, 1163531501), n = j(n, i, o, r, e[u + 13], 5, -1444681467), r = j(r, n, i, o, e[u + 2], 9, -51403784), o = j(o, r, n, i, e[u + 7], 14, 1735328473), i = j(i, o, r, n, e[u + 12], 20, -1926607734), n = I(n, i, o, r, e[u + 5], 4, -378558), r = I(r, n, i, o, e[u + 8], 11, -2022574463), o = I(o, r, n, i, e[u + 11], 16, 1839030562), i = I(i, o, r, n, e[u + 14], 23, -35309556), n = I(n, i, o, r, e[u + 1], 4, -1530992060), r = I(r, n, i, o, e[u + 4], 11, 1272893353), o = I(o, r, n, i, e[u + 7], 16, -155497632), i = I(i, o, r, n, e[u + 10], 23, -1094730640), n = I(n, i, o, r, e[u + 13], 4, 681279174), r = I(r, n, i, o, e[u + 0], 11, -358537222), o = I(o, r, n, i, e[u + 3], 16, -722521979), i = I(i, o, r, n, e[u + 6], 23, 76029189), n = I(n, i, o, r, e[u + 9], 4, -640364487), r = I(r, n, i, o, e[u + 12], 11, -421815835), o = I(o, r, n, i, e[u + 15], 16, 530742520), i = I(i, o, r, n, e[u + 2], 23, -995338651), n = L(n, i, o, r, e[u + 0], 6, -198630844), r = L(r, n, i, o, e[u + 7], 10, 1126891415), o = L(o, r, n, i, e[u + 14], 15, -1416354905), i = L(i, o, r, n, e[u + 5], 21, -57434055), n = L(n, i, o, r, e[u + 12], 6, 1700485571), r = L(r, n, i, o, e[u + 3], 10, -1894986606), o = L(o, r, n, i, e[u + 10], 15, -1051523), i = L(i, o, r, n, e[u + 1], 21, -2054922799), n = L(n, i, o, r, e[u + 8], 6, 1873313359), r = L(r, n, i, o, e[u + 15], 10, -30611744), o = L(o, r, n, i, e[u + 6], 15, -1560198380), i = L(i, o, r, n, e[u + 13], 21, 1309151649), n = L(n, i, o, r, e[u + 4], 6, -145523070), r = L(r, n, i, o, e[u + 11], 10, -1120210379), o = L(o, r, n, i, e[u + 2], 15, 718787259), i = L(i, o, r, n, e[u + 9], 21, -343485551), n = C(n, c), i = C(i, a), o = C(o, l), r = C(r, f)
+            }
+            return Array(n, i, o, r)
+         }(function(e) {
+            for (var t = Array(), n = (1 << P) - 1, i = 0; i < e.length * P; i += P) t[i >> 5] |= (e.charCodeAt(i / P) & n) << i % 32;
+            return t
+         }(e), e.length * P), n = "0123456789abcdef", i = "", o = 0; o < 4 * t.length; o++) i += n.charAt(t[o >> 2] >> o % 4 * 8 + 4 & 15) + n.charAt(t[o >> 2] >> o % 4 * 8 & 15);
+      return i
+   }
+
+   function x(e, t, n, i, o, r) {
+      return C((t = C(C(t, e), C(i, r))) << o | t >>> 32 - o, n)
+   }
+
+   function E(e, t, n, i, o, r, u) {
+      return x(t & n | ~t & i, e, t, o, r, u)
+   }
+
+   function j(e, t, n, i, o, r, u) {
+      return x(t & i | n & ~i, e, t, o, r, u)
+   }
+
+   function I(e, t, n, i, o, r, u) {
+      return x(t ^ n ^ i, e, t, o, r, u)
+   }
+
+   function L(e, t, n, i, o, r, u) {
+      return x(n ^ (t | ~i), e, t, o, r, u)
+   }
+
+   function C(e, t) {
+      var n = (65535 & e) + (65535 & t);
+      return (e >> 16) + (t >> 16) + (n >> 16) << 16 | 65535 & n
+   }
+   var _ = function() {
+         n(t, k);
+         var e = l(t);
+
+         function t() {
+            return i(this, t), e.call(this, {
+               type: O.RegToString,
+               enabled: b.qqBrowser || b.firefox
+            })
+         }
+         return u(t, [{
+            key: "init",
+            value: function() {
+               var t = this;
+               this.lastTime = 0, this.reg = /./, p(this.reg), this.reg.toString = function() {
+                  var e;
+                  return b.qqBrowser ? (e = (new Date).getTime(), t.lastTime && e - t.lastTime < 100 ? t.onDevToolOpen() : t.lastTime = e) : b.firefox && t.onDevToolOpen(), ""
+               }
+            }
+         }, {
+            key: "detect",
+            value: function() {
+               p(this.reg)
+            }
+         }]), t
+      }(),
+      ie = function() {
+         n(t, k);
+         var e = l(t);
+
+         function t() {
+            return i(this, t), e.call(this, {
+               type: O.DefineId
+            })
+         }
+         return u(t, [{
+            key: "init",
+            value: function() {
+               var e = this;
+               this.div = document.createElement("div"), this.div.__defineGetter__("id", function() {
+                  e.onDevToolOpen()
+               }), Object.defineProperty(this.div, "id", {
+                  get: function() {
+                     e.onDevToolOpen()
+                  }
+               })
+            }
+         }, {
+            key: "detect",
+            value: function() {
+               p(this.div)
+            }
+         }]), t
+      }(),
+      oe = function() {
+         n(t, k);
+         var e = l(t);
+
+         function t() {
+            return i(this, t), e.call(this, {
+               type: O.Size,
+               enabled: !b.iframe && !b.edge
+            })
+         }
+         return u(t, [{
+            key: "init",
+            value: function() {
+               var e = this;
+               this.checkWindowSizeUneven(), window.addEventListener("resize", function() {
+                  setTimeout(function() {
+                     e.checkWindowSizeUneven()
+                  }, 100)
+               }, !0)
+            }
+         }, {
+            key: "detect",
+            value: function() {}
+         }, {
+            key: "checkWindowSizeUneven",
+            value: function() {
+               var e = function() {
+                  if (re(window.devicePixelRatio)) return window.devicePixelRatio;
+                  var e = window.screen;
+                  return !(re(e) || !e.deviceXDPI || !e.logicalXDPI) && e.deviceXDPI / e.logicalXDPI
+               }();
+               if (!1 !== e) {
+                  var t = 200 < window.outerWidth - window.innerWidth * e,
+                     e = 300 < window.outerHeight - window.innerHeight * e;
+                  if (t || e) return this.onDevToolOpen(), !1;
+                  N(this.type)
+               }
+               return !0
+            }
+         }]), t
+      }();
+
+   function re(e) {
+      return null != e
+   }
+   var A, ue = function() {
+         n(t, k);
+         var e = l(t);
+
+         function t() {
+            return i(this, t), e.call(this, {
+               type: O.DateToString,
+               enabled: !b.iosChrome && !b.iosEdge
+            })
+         }
+         return u(t, [{
+            key: "init",
+            value: function() {
+               var e = this;
+               this.count = 0, this.date = new Date, this.date.toString = function() {
+                  return e.count++, ""
+               }
+            }
+         }, {
+            key: "detect",
+            value: function() {
+               this.count = 0, p(this.date), w(), 2 <= this.count && this.onDevToolOpen()
+            }
+         }]), t
+      }(),
+      ce = function() {
+         n(t, k);
+         var e = l(t);
+
+         function t() {
+            return i(this, t), e.call(this, {
+               type: O.FuncToString,
+               enabled: !b.iosChrome && !b.iosEdge
+            })
+         }
+         return u(t, [{
+            key: "init",
+            value: function() {
+               var e = this;
+               this.count = 0, this.func = function() {}, this.func.toString = function() {
+                  return e.count++, ""
+               }
+            }
+         }, {
+            key: "detect",
+            value: function() {
+               this.count = 0, p(this.func), w(), 2 <= this.count && this.onDevToolOpen()
+            }
+         }]), t
+      }(),
+      ae = function() {
+         n(t, k);
+         var e = l(t);
+
+         function t() {
+            return i(this, t), e.call(this, {
+               type: O.Debugger,
+               enabled: b.iosChrome || b.iosEdge
+            })
+         }
+         return u(t, [{
+            key: "detect",
+            value: function() {
+               var e = v();
+               100 < v() - e && this.onDevToolOpen()
+            }
+         }]), t
+      }(),
+      le = function() {
+         n(t, k);
+         var e = l(t);
+
+         function t() {
+            return i(this, t), e.call(this, {
+               type: O.Performance,
+               enabled: b.chrome || !b.mobile
+            })
+         }
+         return u(t, [{
+            key: "init",
+            value: function() {
+               this.maxPrintTime = 0, this.largeObjectArray = M()
+            }
+         }, {
+            key: "detect",
+            value: function() {
+               var e = this,
+                  t = h(function() {
+                     y(e.largeObjectArray)
+                  }),
+                  n = h(function() {
+                     p(e.largeObjectArray)
+                  });
+               if (this.maxPrintTime = Math.max(this.maxPrintTime, n), w(), 0 === t || 0 === this.maxPrintTime) return !1;
+               t > 10 * this.maxPrintTime && this.onDevToolOpen()
+            }
+         }]), t
+      }(),
+      fe = (e(A = {}, O.RegToString, _), e(A, O.DefineId, ie), e(A, O.Size, oe), e(A, O.DateToString, ue), e(A, O.FuncToString, ce), e(A, O.Debugger, ae), e(A, O.Performance, le), e(A, O.DebugLib, G), A);
+   var R = Object.assign(function(e) {
+      function t() {
+         var e = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : "";
+         return {
+            success: !e,
+            reason: e
+         }
+      }
+      var n;
+      if (R.isRunning) return t("already running");
+      if (W(), n = window.console || {
+            log: function() {},
+            table: function() {},
+            clear: function() {}
+         }, B = b.ie ? (p = function() {
+            return n.log.apply(n, arguments)
+         }, y = function() {
+            return n.table.apply(n, arguments)
+         }, function() {
+            return n.clear()
+         }) : (p = n.log, y = n.table, n.clear), q(e), d.md5 && ne(function(e) {
+            var t = window.location.search,
+               n = window.location.hash;
+            if ("" !== (t = "" === t && "" !== n ? "?".concat(n.split("?")[1]) : t) && void 0 !== t) {
+               n = new RegExp("(^|&)" + e + "=([^&]*)(&|$)", "i"), e = t.substr(1).match(n);
+               if (null != e) return unescape(e[2])
+            }
+            return ""
+         }(d.tkName)) === d.md5) return t("token passed");
+      if (d.seo && b.seoBot) return t("seobot");
+      R.isRunning = !0, ee(R);
+      var i = R,
+         o = (X = function() {
+            return i.isSuspend
+         }, window.top),
+         r = window.parent;
+      if (g(window), d.disableIframeParents && o && r && o !== window) {
+         for (; r !== o;) g(r), r = r.parent;
+         g(o)
+      }
+      return ("all" === d.detectors ? Object.keys(fe) : d.detectors).forEach(function(e) {
+         new fe[e]
+      }), t()
+   }, {
+      isRunning: !1,
+      isSuspend: !1,
+      md5: ne,
+      version: "0.3.8",
+      DetectorType: O,
+      isDevToolOpened: $
+   });
+   _ = function() {
+      if ("undefined" == typeof window || !window.document) return null;
+      var n = document.querySelector("[disable-devtool-auto]");
+      if (!n) return null;
+      var i = ["disable-menu", "disable-select", "disable-copy", "disable-cut", "disable-paste", "clear-log"],
+         o = ["interval"],
+         r = {};
+      return ["md5", "url", "tk-name", "detectors"].concat(i, o).forEach(function(e) {
+         var t = n.getAttribute(e);
+         null !== t && (-1 !== o.indexOf(e) ? t = parseInt(t) : -1 !== i.indexOf(e) ? t = "false" !== t : "detector" === e && "all" !== t && (t = t.split(" ")), r[function(e) {
+            if (-1 === e.indexOf("-")) return e;
+            var t = !1;
+            return e.split("").map(function(e) {
+               return "-" === e ? (t = !0, "") : t ? (t = !1, e.toUpperCase()) : e
+            }).join("")
+         }(e)] = t)
+      }), r
+   }();
+   return _ && R(_), R
+});
