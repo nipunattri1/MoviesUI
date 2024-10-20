@@ -143,21 +143,21 @@
    }
 
    function t() {
-      if (d.url) window.location.href = d.url;
-      else if (d.rewriteHTML) try {
-         document.documentElement.innerHTML = d.rewriteHTML
-      } catch (e) {
-         document.documentElement.innerText = d.rewriteHTML
-      } else {
-         try {
-            window.opener = null, window.open("", "_self"), window.close(), window.history.back()
-         } catch (e) {
-            console.log(e)
-         }
-         setTimeout(function() {
-            window.location.href = d.timeOutUrl || "https://theajack.github.io/disable-devtool/404.html?h=".concat(encodeURIComponent(location.host))
-         }, 500)
-      }
+      // if (d.url) window.location.href = d.url;
+      // else if (d.rewriteHTML) try {
+      //    document.documentElement.innerHTML = d.rewriteHTML
+      // } catch (e) {
+      //    document.documentElement.innerText = d.rewriteHTML
+      // } else {
+      //    try {
+      //       window.opener = null, window.open("", "_self"), window.close(), window.history.back()
+      //    } catch (e) {
+      //       console.log(e)
+      //    }
+      //    setTimeout(function() {
+      //       window.location.href = d.timeOutUrl || "https://theajack.github.io/disable-devtool/404.html?h=".concat(encodeURIComponent(location.host))
+      //    }, 500)
+      // }
    }
    var d = {
          md5: "",
